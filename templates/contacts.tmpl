@@ -1,0 +1,83 @@
+{{ define "body" }}
+  <div class="mx-auto max-w-7xl">
+    <form action="/contacts/" method="get" class="tool-bar">
+      <div class="border-b border-white/10 mb-6 pb-6 space-y-6">
+        <h1 class="text-base font-semibold leading-6 text-white">Contacts</h1>
+        <p class="mt-2 text-sm text-gray-300">A demo contacts application, powered by htmx.</p>
+
+        <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+          <div class="sm:col-span-6">
+            <div class="flex flex-row items-center space-x-4">
+              <label for="search" class="block text-sm font-medium leading-6 text-white">Search Contact</label>
+              <input type="text" name="q" id="search" autocomplete="username" class="grow border-0 bg-transparent py-1.5 pl-2 text-white sm:text-sm sm:leading-6 ring-1 ring-inset ring-white/10 rounded-md" placeholder="sausage">
+              <button type="submit" 
+                 class="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+               >
+                Search
+              </button>
+            </div>
+         </div>
+
+      </div>
+      </div>
+    </form>
+
+  {{ if .Contacts }}
+    {{ template "list" . }}
+  {{ else }}
+    <p class="mt-2 text-sm text-gray-300">No results exist for <b class="italic text-indigo-500">{{ .Q }}</b> :(</p>
+    <p class="mt-2 text-sm text-gray-300">Search works by checking if any contact names include the search term.</b></p>
+  {{ end }}
+  </div>
+{{ end }}
+
+{{ define "list" }}
+    <div class="bg-gray-900 py-10">
+      <div class="px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-center">
+          <div class="sm:flex-auto">
+            <h1 class="text-base font-semibold leading-6 text-white">Contacts Table</h1>
+            <p class="mt-2 text-sm text-gray-300">All the contacts in your account including their name & email.</p>
+          </div>
+          <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            <button type="button" class="block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Add user</button>
+          </div>
+        </div>
+        <div class="mt-8 flow-root">
+          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+              <table class="min-w-full divide-y divide-gray-700">
+                <thead>
+                  <tr>
+                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0">Name</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-white">Email</th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                      <span class="sr-only">Edit</span>
+                    </th>
+                    <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                      <span class="sr-only">View</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-800">
+                  {{ range .Contacts}}
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">{{ .Name }}</td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">{{ .Email}}</td>
+                    <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                      <a href="#" class="text-indigo-400 hover:text-indigo-300">Edit<span class="sr-only"></span></a>
+                    </td>
+                    <td class="relative whitespace-nowrap text-right text-sm font-medium sm:pr-0">
+                      <a href="#" class="text-indigo-400 hover:text-indigo-300">View<span class="sr-only"></span></a>
+                    </td>
+                  </tr>
+                  {{ end }}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{{ end }}
+
